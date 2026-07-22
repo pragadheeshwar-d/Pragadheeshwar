@@ -1,26 +1,88 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light Theme (Neutral Harmony Editorial) */
+  --background: #F4F1DE;
+  --foreground: #3D405B;
+  
+  --card-bg: #EAE6CD; /* Slightly darker cream for depth */
+  --card-border: #D6D2C4;
+  
+  --accent-1: #4338CA; /* Deep Indigo */
+  --accent-2: #0D9488; /* Electric Teal */
+  
+  --muted: #64748B;
+}
+
+[data-theme='dark'] {
+  /* Dark Theme (AI Futuristic Glassmorphism) */
+  --background: #030712;
+  --foreground: #F8FAFC;
+  
+  --card-bg: rgba(15, 23, 42, 0.4);
+  --card-border: rgba(0, 229, 255, 0.15);
+  
+  --accent-1: #00E5FF; /* Cyan */
+  --accent-2: #7C3AED; /* Purple */
+  
+  --muted: #94A3B8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-card: var(--card-bg);
+  --color-border: var(--card-border);
+  --color-accent-1: var(--accent-1);
+  --color-accent-2: var(--accent-2);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-outfit);
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+section, h1, h2, h3, h4, h5, h6 {
+  scroll-margin-top: 5rem; /* ~80px, clears the navbar */
+}
+
+/* Base Body Gradient for Dark Mode */
+[data-theme='dark'] body {
+  background: radial-gradient(circle at top left, #111827, #030712), radial-gradient(circle at bottom right, #0F172A, #030712);
+  background-attachment: fixed;
+}
+
+@layer utilities {
+  .glass-card {
+    @apply bg-card backdrop-blur-[15px] border border-border rounded-[20px] shadow-lg transition-all duration-300;
+  }
+  
+  [data-theme='dark'] .glass-card:hover {
+    @apply border-accent-1/40 shadow-[0_0_20px_rgba(0,229,255,0.15)] -translate-y-1;
+  }
+
+  [data-theme='light'] .glass-card:hover {
+    @apply border-accent-1/50 shadow-xl -translate-y-1;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-1 to-accent-2;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
 }
