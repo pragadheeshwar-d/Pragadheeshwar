@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { Download, ExternalLink, Mail } from "lucide-react";
 import { personal, projects, certificates, codingStats } from "@/data/content";
-import type { PageKey } from "@/app/page";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 // ─── Tech Stack Badges ───────────────────────────────────────────────────────
@@ -25,10 +25,6 @@ const techStack = [
   { label: "VS Code",                  color: "from-blue-600/20 to-sky-500/20",       border: "border-blue-600/40",    text: "text-blue-400",   icon: "💻" },
 ];
 
-interface HeroProps {
-  onNavigate: (page: PageKey) => void;
-}
-
 function GithubIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -45,7 +41,7 @@ function LinkedinIcon() {
   );
 }
 
-export function Hero({ onNavigate }: HeroProps) {
+export function Hero() {
   const [solvedCount, setSolvedCount] = useState<string | number>(codingStats.totalSolved);
 
   useEffect(() => {
@@ -134,13 +130,13 @@ export function Hero({ onNavigate }: HeroProps) {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <button
-              onClick={() => onNavigate("projects")}
+            <Link
+              href="/projects"
               className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-accent-1 to-accent-2 text-white font-semibold hover:opacity-95 transition-all shadow-[0_0_20px_rgba(67,56,202,0.3)] hover:shadow-[0_0_30px_rgba(13,148,136,0.5)] active:scale-95"
             >
               <ExternalLink className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               View Projects
-            </button>
+            </Link>
             <a
               href="/assets/resume.pdf"
               className="group relative overflow-hidden inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border-2 border-accent-1 text-accent-1 font-semibold hover:text-white transition-all duration-300 shadow-sm active:scale-95"

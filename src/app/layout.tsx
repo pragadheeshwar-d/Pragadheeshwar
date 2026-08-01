@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Navbar } from "@/components/sections/Navbar";
 
 export default function RootLayout({
   children,
@@ -39,7 +40,12 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen font-sans antialiased selection:bg-accent-1/30">
         <ThemeProvider>
-          {children}
+          <div className="flex flex-col min-h-screen">
+            <Navbar />
+            <main className="flex-1 overflow-x-hidden pt-16">
+              {children}
+            </main>
+          </div>
           <Chatbot />
         </ThemeProvider>
       </body>

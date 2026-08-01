@@ -3,27 +3,24 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
-import type { PageKey } from "@/app/page";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 
-const navLinks: { label: string; key: PageKey }[] = [
-  { label: "About",        key: "about" },
-  { label: "Coding Profile", key: "codingProfile" },
-  { label: "Projects",     key: "projects" },
-  { label: "Education & Skills", key: "timeline" },
-  { label: "Certificates", key: "certificates" },
-  { label: "Contact",      key: "contact" },
+const navLinks: { label: string; path: string }[] = [
+  { label: "About",        path: "/about" },
+  { label: "Coding Profile", path: "/coding-profile" },
+  { label: "Projects",     path: "/projects" },
+  { label: "Education & Skills", path: "/timeline" },
+  { label: "Certificates", path: "/certificates" },
+  { label: "Contact",      path: "/contact" },
 ];
 
-interface NavbarProps {
-  activePage: PageKey;
-  onNavigate: (page: PageKey) => void;
-}
-
-export function Navbar({ activePage, onNavigate }: NavbarProps) {
+export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -31,8 +28,7 @@ export function Navbar({ activePage, onNavigate }: NavbarProps) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  function handleNav(key: PageKey) {
-    onNavigate(key);
+  function handleMobileNav() {
     setMenuOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -52,27 +48,27 @@ export function Navbar({ activePage, onNavigate }: NavbarProps) {
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <button
-              onClick={() => handleNav("home")}
+            <Link
+              href="/"
               className="text-xl font-bold text-gradient hover:opacity-80 transition-opacity"
             >
               Pragadheeshwar
-            </button>
+            </Link>
 
             {/* Desktop links */}
             <ul className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => (
                 <li key={link.label}>
-                  <button
-                    onClick={() => handleNav(link.key)}
+                  <Link
+                    href={link.path}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                      activePage === link.key
+                      pathname === link.path
                         ? "text-accent-1 bg-accent-1/10 border border-accent-1/30"
                         : "text-muted hover:text-foreground hover:bg-card/60"
                     }`}
                   >
                     {link.label}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -88,12 +84,12 @@ export function Navbar({ activePage, onNavigate }: NavbarProps) {
               </button>
 
               {/* Hire Me button */}
-              <button
-                onClick={() => handleNav("contact")}
+              <Link
+                href="/contact"
                 className="inline-flex items-center px-4 py-2 rounded-xl bg-gradient-to-r from-accent-1 to-accent-2 text-foreground text-sm font-semibold hover:opacity-90 transition-opacity"
               >
                 Hire Me
-              </button>
+              </Link>
             </div>
 
             {/* Mobile menu button */}
@@ -128,25 +124,27 @@ export function Navbar({ activePage, onNavigate }: NavbarProps) {
             <ul className="flex flex-col px-6 py-4 gap-1">
               {navLinks.map((link) => (
                 <li key={link.label}>
-                  <button
-                    onClick={() => handleNav(link.key)}
-                    className={`w-full text-left px-4 py-3 rounded-lg transition-all ${
-                      activePage === link.key
+                  <Link
+                    href={link.path}
+                    onClick={handleMobileNav}
+                    className={`block w-full text-left px-4 py-3 rounded-lg transition-all ${
+                      pathname === link.path
                         ? "text-accent-1 bg-accent-1/10"
                         : "text-foreground hover:bg-card"
                     }`}
                   >
                     {link.label}
-                  </button>
+                  </Link>
                 </li>
               ))}
               <li className="pt-2">
-                <button
-                  onClick={() => handleNav("contact")}
-                  className="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-accent-1 to-accent-2 text-foreground text-center font-semibold"
+                <Link
+                  href="/contact"
+                  onClick={handleMobileNav}
+                  className="block w-full px-4 py-3 rounded-xl bg-gradient-to-r from-accent-1 to-accent-2 text-foreground text-center font-semibold"
                 >
                   Hire Me
-                </button>
+                </Link>
               </li>
             </ul>
           </motion.div>
