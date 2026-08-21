@@ -1,4 +1,4 @@
-import { streamText } from 'ai';
+import { streamText, convertToModelMessages } from 'ai';
 import { google } from '@ai-sdk/google';
 import {
   personal,
@@ -64,8 +64,8 @@ When responding, try to use formatting like bullet points or bold text to make i
   const result = await streamText({
     model: google('gemini-2.5-flash'),
     system: systemPrompt,
-    messages,
+    messages: await convertToModelMessages(messages),
   });
 
-  return result.toDataStreamResponse();
+  return result.toUIMessageStreamResponse();
 }

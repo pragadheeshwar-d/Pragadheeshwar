@@ -13,14 +13,31 @@ function cn(...inputs: ClassValue[]) {
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat();
+  const [input, setInput] = useState('');
+  const { messages, sendMessage, status } = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const isLoading = status === 'streaming' || status === 'submitted';
 
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+    sendMessage({ text: input.trim() });
+    setInput('');
+  };
+
+  // Extract plain text from a message (v7 uses parts[] only — no content field)
+  const getMessageText = (message: (typeof messages)[number]): string => {
+    return message.parts
+      .filter((p) => p.type === 'text')
+      .map((p) => ('text' in p ? p.text : ''))
+      .join('');
+  };
 
   return (
     <>
@@ -96,8 +113,7 @@ export default function Chatbot() {
                             : "bg-zinc-100 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100 rounded-bl-none border border-zinc-200 dark:border-zinc-700/50"
                         )}
                       >
-                        {/* We are doing a simple text render here. For markdown, we'd need react-markdown. */}
-                        <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
+                        <p className="whitespace-pre-wrap leading-relaxed">{getMessageText(message)}</p>
                       </div>
                     </div>
                   ))
@@ -126,13 +142,13 @@ export default function Chatbot() {
                 <div className="relative flex items-center">
                   <input
                     value={input}
-                    onChange={handleInputChange}
+                    onChange={(e) => setInput(e.target.value)}
                     placeholder="Type your message..."
                     className="w-full pl-4 pr-12 py-3 rounded-xl bg-zinc-100 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 border border-transparent dark:border-zinc-700/50 transition-all placeholder:text-zinc-500"
                   />
                   <button
                     type="submit"
-                    disabled={isLoading || !input?.trim()}
+                    disabled={isLoading || !input.trim()}
                     className="absolute right-2 p-1.5 text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-500/50 disabled:cursor-not-allowed rounded-lg transition-colors"
                   >
                     <Send className="w-4 h-4" />

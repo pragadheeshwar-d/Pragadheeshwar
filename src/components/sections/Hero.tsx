@@ -149,7 +149,7 @@ export function Hero() {
               <a href={personal.github} target="_blank" rel="noreferrer" className="p-3.5 bg-card border border-border/50 rounded-full hover:bg-accent-1/10 hover:border-accent-1 hover:text-accent-1 transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1.5 hover:scale-110">
                 <GithubIcon />
               </a>
-              <a href={personal.instagram} target="_blank" rel="noreferrer" className="p-3.5 bg-card border border-border/50 rounded-full hover:bg-accent-1/10 hover:border-accent-1 hover:text-accent-1 transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1.5 hover:scale-110">
+              <a href={personal.linkedin} target="_blank" rel="noreferrer" className="p-3.5 bg-card border border-border/50 rounded-full hover:bg-accent-1/10 hover:border-accent-1 hover:text-accent-1 transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1.5 hover:scale-110">
                 <LinkedinIcon />
               </a>
               <a href={`mailto:${personal.email}`} className="p-3.5 bg-card border border-border/50 rounded-full hover:bg-accent-1/10 hover:border-accent-1 hover:text-accent-1 transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1.5 hover:scale-110">

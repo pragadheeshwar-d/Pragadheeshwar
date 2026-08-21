@@ -18,11 +18,11 @@ export function Certificates() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {certificates.map((cert, i) => (
             <motion.div
-              key={cert.title}
+              key={`${cert.title}-${i}`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.07 }}
+              transition={{ duration: 0.4, delay: (i % 4) * 0.08 }}
               whileHover={{ y: -6, scale: 1.02 }}
               className="glass-card p-4 flex flex-col gap-3 group cursor-default hover:border-accent-1/"
             >

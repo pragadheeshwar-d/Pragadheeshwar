@@ -14,8 +14,47 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Pragadheeshwar D | AI Engineer & Python Developer",
-  description: "Portfolio of Pragadheeshwar D, an AI Engineer specializing in Voice AI, Python, NLP, and modern web development.",
+  metadataBase: new URL("https://pragadheesh-portfolio-v2.vercel.app"),
+  title: {
+    default: "Pragadheeshwar D | AI Engineer & Python Developer",
+    template: "%s | Pragadheeshwar D",
+  },
+  description:
+    "Portfolio of Pragadheeshwar D, an AI Engineer specializing in Voice AI, Python, NLP, and modern web development.",
+  keywords: [
+    "Pragadheeshwar",
+    "AI Engineer",
+    "Python Developer",
+    "Voice AI",
+    "NLP",
+    "Next.js",
+    "portfolio",
+  ],
+  authors: [{ name: "Pragadheeshwar D" }],
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://pragadheesh-portfolio-v2.vercel.app",
+    siteName: "Pragadheeshwar D | Portfolio",
+    title: "Pragadheeshwar D | AI Engineer & Python Developer",
+    description:
+      "Portfolio of Pragadheeshwar D, an AI Engineer specializing in Voice AI, Python, NLP, and modern web development.",
+    images: [
+      {
+        url: "/profile-v3.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Pragadheeshwar D — AI Engineer & Python Developer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pragadheeshwar D | AI Engineer & Python Developer",
+    description:
+      "Portfolio of Pragadheeshwar D, an AI Engineer specializing in Voice AI, Python, NLP, and modern web development.",
+    images: ["/profile-v3.jpg"],
+  },
   verification: {
     google: "MyXx7iv5sC_UlmaZfZmEHhzXs7oMxY9RkzN2hcE1R4s",
   },
